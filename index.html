@@ -459,11 +459,17 @@ function lev(a,b){
   return d[a.length][b.length];
 }
 function judge(input,item,dir){
-  const u=canon(input); if(!u) return "bad";
   const acc=accepted(item,dir);
-  if(acc.includes(u)) return "ok";
-  for(const a of acc){const tol=a.length>=20?Math.floor(a.length/10):a.length>=9?2:(a.length>=4?1:0); if(tol&&lev(u,a)<=tol) return "almost";}
-  return "bad";
+  const one=s=>{const u=canon(s); if(!u) return null; if(acc.includes(u)) return "ok";
+    for(const a of acc){const tol=a.length>=20?Math.floor(a.length/10):a.length>=9?2:(a.length>=4?1:0); if(tol&&lev(u,a)<=tol) return "almost";}
+    return "bad";};
+  const whole=one(input); if(whole===null) return "bad"; if(whole==="ok") return "ok";
+  // mehrere Bedeutungen: getrennt durch ; , / oder "und"/"oder"
+  const parts=input.split(/[;,\/]|\s+(?:oder|und|or|and)\s+/i).map(one).filter(x=>x!==null);
+  if(parts.length>1){ if(parts.every(x=>x==="ok")) return "ok"; if(parts.every(x=>x!=="bad")) return "almost"; }
+  const words=input.trim().split(/\s+/);
+  if(whole==="bad"&&words.length>1&&words.every(w=>one(w)==="ok")) return "ok";
+  return whole;
 }
 
 // Gewichtung: Kasten 0 = neu, 1 = schwierig ... 5 = sitzt
