@@ -75,6 +75,8 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-of
 .hint{color:var(--muted);font-size:1rem}
 .pip{position:absolute;top:18px;right:18px;width:14px;height:14px;border-radius:50%}
 input.answer{width:100%;font:inherit;font-size:1.4rem;padding:14px;border:2px solid var(--edge);border-radius:12px;background:var(--paper);color:var(--text);margin-top:16px}
+body.pen input.answer{min-height:120px;font-size:2.2rem;padding:18px;border-style:dashed;border-width:3px}
+body.pen input.answer::placeholder{font-size:1.1rem}
 .actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
 .btn{background:var(--ink);color:var(--paper);padding:14px 20px;font-family:"Fredoka",sans-serif;font-weight:600;font-size:1.15rem;flex:1}
 .btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink)}
@@ -115,6 +117,12 @@ th{font-family:"Fredoka",sans-serif;color:var(--ink);font-weight:600}
     <button data-v="de">Deutsch → Englisch</button>
     <button data-v="mix">Gemischt</button>
     <button data-v="en">Englisch → Deutsch</button>
+  </div>
+
+  <h2>Schreiben mit</h2>
+  <div class="seg" id="penSeg">
+    <button data-v="0">Tastatur</button>
+    <button data-v="1">Stift (Apple Pencil)</button>
   </div>
 
   <h2>Welche Wörter?</h2>
@@ -257,9 +265,121 @@ const RAW = [
  ["its","sein/-e; ihr/-e","pron",{hDe:"von einem Ding oder Tier (Achtung: nicht it’s)"}],
  ["our","unser/-e","pron"],
  ["your","euer/eure","pron",{hEn:"zu mehreren Personen",hDe:"zu mehreren Personen"}],
- ["their","ihr/-e","pron",{hDe:"von mehreren"}]
+ ["their","ihr/-e","pron",{hDe:"von mehreren"}],
+
+ // Pick-up A, S. 198 bis 201
+ ["I’m from Greenwich.","Ich bin aus Greenwich.","pua"],
+ ["Look!","Schau/Schaut mal!","pua",{aDe:["schau mal","schaut mal"]}],
+ ["two boys and a dog","zwei Jungen und ein Hund","pua"],
+ ["in Greenwich Park","im Greenwich-Park","pua"],
+ ["Dogs are my friends, but not cats.","Hunde sind meine Freunde, aber Katzen nicht.","pua"],
+ ["I’m a mouse.","Ich bin eine Maus.","pua"],
+ ["Here’s your ball.","Hier ist dein Ball.","pua"],
+ ["Hello.","Hallo.","pua",{aEn:["hello","hi"]}],
+ ["I’m Pia.","Ich heiße Pia.; Ich bin Pia.","pua",{aEn:["my name is pia"]}],
+ ["You’re a nice dog.","Du bist ein lieber Hund.","pua"],
+ ["What’s your name?","Wie heißt du?; Wie heißen Sie?","pua"],
+ ["Sorry!","Entschuldigung!; Tut mir leid!","pua"],
+ ["My dog is crazy.","Mein Hund ist verrückt.","pua"],
+ ["My name is Luke.","Ich heiße Luke.","pua",{aEn:["I'm Luke"]}],
+ ["We’re from Greenwich.","Wir sind aus Greenwich.","pua"],
+ ["Where are you from?","Woher kommst du?; Woher kommt ihr?; Woher kommen Sie?","pua"],
+ ["Are you on holiday?","Sind Sie im Urlaub?; Seid ihr im Urlaub?; Bist du im Urlaub?","pua"],
+ ["yes","ja","pua"],
+ ["no","nein","pua"],
+ ["I’m here with my parents.","Ich bin mit meinen Eltern hier.","pua"],
+ ["How old are you?","Wie alt bist du?; Wie alt sind Sie?","pua"],
+ ["You too?","Du auch?","pua"],
+ ["German","deutsch; Deutsch; aus Deutschland; Deutsche/-r","pua",{aDe:["Deutsche","Deutscher"]}],
+ ["different","anders; unterschiedlich; verschieden","pua"],
+ ["I’m English.","Ich bin Engländer/-in.","pua",{aDe:["Ich bin Engländer","Ich bin Engländerin"]}],
+ ["I love dogs.","Ich liebe Hunde.; Ich mag Hunde total gern.","pua"],
+ ["Dogs love squirrels.","Hunde lieben Eichhörnchen.","pua"],
+ ["That was close!","Das war knapp!","pua"],
+ ["This is Pia.","Das (hier) ist Pia.","pua"],
+ ["a girl from Germany","ein Mädchen aus Deutschland","pua"],
+ ["school","Schule","pua"],
+ ["Greenwich Park is big.","Der Greenwich-Park ist groß.","pua"],
+ ["It’s great for cycling.","Er ist super zum Radfahren.","pua"],
+ ["I don’t like cycling.","Ich fahre nicht gern Rad.","pua"],
+ ["My favourite sport is football.","Mein Lieblingssport ist Fußball.","pua"],
+ ["I like the boating lake.","Ich mag den See mit den Booten.; Mir gefällt der See mit den Booten.","pua"],
+ ["What’s that?","Was ist das?","pua"],
+ ["Let’s go!","Lass/Lasst uns hingehen!; Los, gehen wir hin!","pua",{aDe:["lass uns hingehen","lasst uns hingehen","los gehen wir hin"]}],
+ ["It’s fun.","Es macht Spaß.","pua"],
+ ["puzzle","Rätsel","pua"],
+ ["I’m not scared of dogs.","Ich habe keine Angst vor Hunden.","pua"],
+ ["I’m scared of cats.","Ich habe Angst vor Katzen.","pua"],
+ ["Worms are OK.","Würmer sind o.k.","pua",{aEn:["worms are okay"],aDe:["Würmer sind ok","Würmer sind okay"]}],
+ ["Rabbits are nice.","Kaninchen sind nett.","pua"],
+ ["They’re my friends.","Sie sind meine Freunde.","pua"],
+ ["They don’t eat mice.","Sie essen keine Mäuse.","pua"],
+ ["word","Wort","pua"],
+ ["Inline skating is great.","Inlineskatesfahren ist toll.","pua",{aDe:["Inlineskaten ist toll"]}],
+ ["Volleyball is a great sport.","Volleyball ist ein toller Sport.","pua"],
+ ["the same","der-/die-/dasselbe; der/die/das gleiche","pua",{aDe:["dasselbe","derselbe","dieselbe","das gleiche","gleich"]}],
+ ["correct","richtig; korrekt","pua",{aEn:["right"],hDe:"Is that ___?"}],
+ ["What’s your favourite colour?","Was ist deine Lieblingsfarbe?","pua"],
+ ["picture","Bild; Foto","pua"],
+ ["people","Leute; Menschen","pua"],
+ ["thing","Ding; Sache","pua"],
+ ["number","Zahl; Nummer","pua"],
+ ["Boat number eight is pink.","Boot Nummer acht ist rosa.","pua"],
+ ["I can see Sherlock.","Ich kann Sherlock sehen.; Ich sehe Sherlock.","pua"],
+ ["Roll two dice.","Würfle/Würfelt mit zwei Würfeln.","pua",{aDe:["Würfle mit zwei Würfeln","Würfelt mit zwei Würfeln"]}],
+ ["Four and six is ten.","Vier plus sechs ist zehn.","pua"],
+ ["please","bitte","pua"],
+ ["Can you name four sports?","Kannst du vier Sportarten nennen?","pua"],
+ ["Say your phone number.","Sage deine Telefonnummer.","pua",{aDe:["Sag deine Telefonnummer"]}],
+ ["What colour is Sherlock?","Welche Farbe hat Sherlock?","pua"],
+ ["alphabet","Alphabet","pua"],
+ ["Rap like me.","Rappe/Rappt wie ich.","pua",{aDe:["Rappe wie ich","Rappt wie ich","Rapp wie ich"]}],
+ ["I love you.","Ich liebe dich.; Ich mag dich.","pua"],
+
+ ["one","eins","num",{n:1}],["two","zwei","num",{n:2}],["three","drei","num",{n:3}],["four","vier","num",{n:4}],
+ ["five","fünf","num",{n:5}],["six","sechs","num",{n:6}],["seven","sieben","num",{n:7}],["eight","acht","num",{n:8}],
+ ["nine","neun","num",{n:9}],["ten","zehn","num",{n:10}],["eleven","elf","num",{n:11}],["twelve","zwölf","num",{n:12}],
+
+ ["animal","Tier","ani"],
+ ["hamster","Hamster","ani"],["horse","Pferd","ani"],["cat","Katze","ani"],["worm","Wurm","ani"],
+ ["parrot","Papagei","ani"],["squirrel","Eichhörnchen","ani"],["fish","Fisch","ani"],["rat","Ratte","ani"],
+ ["budgie","Wellensittich","ani"],["dog","Hund","ani"],["rabbit","Kaninchen","ani",{aDe:["Hase"]}],["bear","Bär","ani"],
+ ["mouse","Maus","ani",{hDe:"eine Maus"}],["mice","Mäuse","ani",{hDe:"mehrere Mäuse"}],
+
+ ["colour","Farbe","col"],
+ ["black","schwarz","col"],["blue","blau","col"],["brown","braun","col"],["green","grün","col"],
+ ["grey","grau","col"],["orange","orange","col"],["pink","pink; rosa","col"],["purple","lila; violett","col"],
+ ["red","rot","col"],["white","weiß","col"],["yellow","gelb","col"],
+
+ // S. 203 und 207
+ ["living room","Wohnzimmer","home"],["bedroom","Schlafzimmer","home"],["kitchen","Küche","home"],
+ ["bathroom","Bad; Badezimmer","home",{hDe:"der Raum, nicht die Wanne"}],
+ ["roof","Dach","home"],["door","Tür","home"],["window","Fenster","home"],["hall","Flur","home"],
+ ["cellar","Keller","home"],["terrace","Terrasse","home"],["balcony","Balkon","home"],["garage","Garage","home"],["shed","Schuppen","home"],
+
+ ["sister","Schwester","fam"],["brother","Bruder","fam"],["father","Vater","fam"],["mother","Mutter","fam"],
+ ["cousin","Cousin/Cousine","fam"],["only child","Einzelkind","fam"],["dad","Papa","fam"],["mum","Mama","fam"],
+ ["uncle","Onkel","fam"],["aunt","Tante","fam"],
+ ["little","klein","fam",{aEn:["small"],hDe:"___ brother"}],
+ ["an","ein/-e","fam",{aDe:["ein","eine"],hDe:"vor a, e, i, o, u: ___ animal"}],
+ ["she’s","sie ist","fam",{aEn:["she is"]}],["he’s","er ist","fam",{aEn:["he is"]}],
+ ["isn’t","ist nicht","fam",{aEn:["is not"]}],
+ ["always","immer; ständig","fam"],["easy","einfach; leicht","fam"],
+
+ ["good","gut","more"],["biscuit","Keks","more"],["to help","helfen","more"],["to collect","sammeln","more"],
+ ["new","neu","more"],["small","klein","more",{aEn:["little"],hDe:"Gegenteil von big"}],
+ ["fantasy","Fantasie; Traum-","more"],["to draw","zeichnen","more"],["step","Stufe; Schritt","more"],
+ ["busy","belebt; beschäftigt","more"],["Who … for?","Für wen …?","more",{aEn:["who for"]}],
+ ["who","wer; wem; wen","more"],
+ ["to explore","auf Entdeckungsreise gehen; sich umschauen; erkunden; erforschen","more",{aDe:["umschauen"]}],
+ ["best","beste/-r/-s","more",{aDe:["beste","bester","bestes"]}],["bag","Tasche; Tüte","more"],
+ ["maybe","vielleicht","more"],["after","nach (zeitlich)","more",{hDe:"___ school (zeitlich)"}],
+ ["visit","Besuch","more"],["outside","nach draußen; draußen; außerhalb (von)","more"],
+ ["awful","schrecklich; furchtbar","more"],["Don’t worry!","Keine Sorge!","more"],
+ ["sentence","Satz","more"],["right","richtig; korrekt","more",{aEn:["correct"],hDe:"Yes, that’s ___."}],
+ ["ending","Ende; Schluss (einer Geschichte)","more"],["to talk about","sprechen über; erzählen von","more"]
 ];
-const TOPICS=[["all","Alle"],["st","Station 2 Wörter"],["room","Mein Zimmer"],["prep","Präpositionen"],["num","Zahlen"],["pron","Pronomen"]];
+const TOPICS=[["all","Alle"],["pua","Pick-up A"],["ani","Tiere"],["col","Farben"],["num","Zahlen"],["home","Haus & Räume"],["fam","Familie"],["more","Story & mehr"],["st","Station 2 Wörter"],["room","Mein Zimmer"],["prep","Präpositionen"],["pron","Pronomen"]];
 const VOCAB=RAW.map((r,i)=>({id:"v"+i,en:r[0],de:r[1],topic:r[2],...(r[3]||{})}));
 
 // Lückensätze wie Aufgabe 15 (eigene Übungssätze)
@@ -286,13 +406,13 @@ const GAPS=[
 const GAP_OPTS=["my","your","his","her","its","our","their"];
 
 const KEY="vokabeltrainer-unit1-v1";
-let S={boxes:{},settings:{dir:"mix",topic:"all"}};
+let S={boxes:{},settings:{dir:"mix",topic:"all",pen:false}};
 try{const raw=localStorage.getItem(KEY); if(raw){const p=JSON.parse(raw); if(p&&p.boxes) S={boxes:p.boxes,settings:{...S.settings,...(p.settings||{})}};}}catch(e){}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 function rec(id,dir){const k=id+"|"+dir; if(!S.boxes[k]) S.boxes[k]={b:0,w:0,r:0}; return S.boxes[k];}
 
 function canon(s){
-  s=s.toLowerCase().replace(/[’`´]/g,"'").replace(/\(([^)]*)\)/g," $1 ")
+  s=s.toLowerCase().replace(/[’`´']/g,"").replace(/\(([^)]*)\)/g," $1 ")
    .replace(/…|\.\.\./g," ").replace(/[.,!?;:"„“]/g," ").replace(/-/g," ")
    .replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss")
    .replace(/\s+/g," ").trim();
@@ -300,7 +420,7 @@ function canon(s){
 }
 function variants(text){
   const out=new Set();
-  text.split(/[;,]/).map(v=>v.trim()).filter(Boolean).forEach(v=>{
+  text.split(";").flatMap(p=>p.includes(",")&&p.trim().split(/\s+/).length<=3?p.split(","):[p]).map(v=>v.trim()).filter(Boolean).forEach(v=>{
     out.add(v); out.add(v.replace(/\([^)]*\)/g,""));
     const m=v.match(/^(\S+)\/-e$/); if(m){out.add(m[1]); out.add(m[1]+"e");}
     if(/^[^\s\/]+\/[^\s\/-][^\s\/]*$/.test(v)) v.split("/").forEach(x=>out.add(x));
@@ -323,7 +443,7 @@ function judge(input,item,dir){
   const u=canon(input); if(!u) return "bad";
   const acc=accepted(item,dir);
   if(acc.includes(u)) return "ok";
-  for(const a of acc){const tol=a.length>=9?2:(a.length>=4?1:0); if(tol&&lev(u,a)<=tol) return "almost";}
+  for(const a of acc){const tol=a.length>=20?Math.floor(a.length/10):a.length>=9?2:(a.length>=4?1:0); if(tol&&lev(u,a)<=tol) return "almost";}
   return "bad";
 }
 
@@ -355,9 +475,12 @@ function renderHome(){
   const max=Math.max(...c,1);
   $("boxes").innerHTML=c.map((n,i)=>`<div class="box"><span class="n">${n}</span><div class="stack" style="--c:var(${BOXCOL[i]});height:${Math.max(4,n/max*100)}px"></div><span class="lbl">${BOXLBL[i]}</span></div>`).join("");
   document.querySelectorAll("#dirSeg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===S.settings.dir));
+  document.querySelectorAll("#penSeg button").forEach(b=>b.setAttribute("aria-pressed",(b.dataset.v==="1")===!!S.settings.pen));
+  document.body.classList.toggle("pen",!!S.settings.pen);
   $("topicSeg").innerHTML=TOPICS.map(([k,l])=>`<button data-v="${k}" aria-pressed="${k===S.settings.topic}">${l}</button>`).join("");
 }
 $("dirSeg").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; S.settings.dir=b.dataset.v; save(); renderHome();});
+$("penSeg").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; S.settings.pen=b.dataset.v==="1"; save(); renderHome();});
 $("topicSeg").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; S.settings.topic=b.dataset.v; save(); renderHome();});
 
 function startRound(mode){
@@ -396,7 +519,12 @@ function nextQ(){
   $("dirLbl").textContent=de?"Wie heißt das auf Englisch?":"Was heißt das auf Deutsch?";
   $("prompt").textContent=de?it.de:it.en;
   $("hint").textContent=(de?it.hDe:it.hEn)||"";
-  if(R.mode==="type"){$("answer").value=""; $("answer").disabled=false; $("typeBtns").classList.remove("hidden"); setTimeout(()=>$("answer").focus(),50);}
+  if(R.mode==="type"){
+    const a=$("answer"); a.value=""; a.disabled=false; a.lang=de?"en":"de";
+    a.placeholder=S.settings.pen?"Hier mit dem Stift hineinschreiben":"Deine Antwort";
+    $("typeBtns").classList.remove("hidden");
+    if(!S.settings.pen) setTimeout(()=>a.focus(),50); else a.blur();
+  }
   else {$("revealRow").classList.remove("hidden"); $("judgeRow").classList.add("hidden");}
 }
 
