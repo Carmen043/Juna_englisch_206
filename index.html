@@ -3,607 +3,226 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Vokabeltrainer Unit 1</title>
+<title>Meine ersten englischen Wörter</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#F7FAFF; --line:#D6E3F5; --ink:#1D3A8A; --text:#1B2540; --muted:#5B6787;
-  --marker:#FFD84D; --ok:#1E9E5A; --okbg:#E3F6EB; --bad:#D9472F; --badbg:#FCE7E3;
-  --almost:#A87300; --almostbg:#FFF4D1; --card:#FFFFFF; --edge:#BFD0EA;
-  --b0:#B9C3D6; --b1:#E5533D; --b2:#F08C2E; --b3:#F2C230; --b4:#7CC35A; --b5:#1E9E5A;
-  color-scheme: light;
+  --bg:#EAF6FF; --sky:#BFE3FF; --card:#FFFFFF; --text:#22305A; --muted:#5E6B8F;
+  --accent:#FF7AA8; --star:#FFC83D; --ok:#2DB36F; --okbg:#DDF6E8; --bad:#F06449; --badbg:#FDE5E0; --edge:#CFE2F5;
+  color-scheme:light;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --paper:#101828; --line:#1E2A42; --ink:#9DB6FF; --text:#E6ECFA; --muted:#98A3BF;
-    --marker:#E8C53A; --ok:#4CCB86; --okbg:#143524; --bad:#FF7A63; --badbg:#3A1A15;
-    --almost:#F0C04A; --almostbg:#3A2F0E; --card:#172238; --edge:#2B3B5C;
-    --b0:#55607A; color-scheme: dark;
+    --bg:#121A2E; --sky:#1C2A4A; --card:#1B2640; --text:#EEF3FF; --muted:#A3AFCF;
+    --accent:#FF8FB6; --star:#FFD45E; --ok:#53D18F; --okbg:#173A28; --bad:#FF7F66; --badbg:#3E1E18; --edge:#2E3E62;
+    color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --paper:#101828; --line:#1E2A42; --ink:#9DB6FF; --text:#E6ECFA; --muted:#98A3BF;
-  --marker:#E8C53A; --ok:#4CCB86; --okbg:#143524; --bad:#FF7A63; --badbg:#3A1A15;
-  --almost:#F0C04A; --almostbg:#3A2F0E; --card:#172238; --edge:#2B3B5C;
-  --b0:#55607A; color-scheme: dark;
+  --bg:#121A2E; --sky:#1C2A4A; --card:#1B2640; --text:#EEF3FF; --muted:#A3AFCF;
+  --accent:#FF8FB6; --star:#FFD45E; --ok:#53D18F; --okbg:#173A28; --bad:#FF7F66; --badbg:#3E1E18; --edge:#2E3E62;
+  color-scheme:dark;
 }
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:inherit}
-body{
-  margin:0; min-height:100%; color:var(--text);
-  background-color:var(--paper);
-  background-image:repeating-linear-gradient(to bottom, transparent 0 31px, var(--line) 31px 32px);
-  font-family:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif; font-size:18px; line-height:1.45;
-}
-main{max-width:640px;margin:0 auto;padding:20px 18px 48px}
-h1,h2{font-family:"Fredoka","Trebuchet MS",system-ui,sans-serif;color:var(--ink);margin:0}
-h1{font-size:2rem;line-height:1.1}
-h2{font-size:1.3rem;margin:28px 0 10px}
+body{margin:0;min-height:100%;background:linear-gradient(var(--sky),var(--bg) 320px);background-color:var(--bg);color:var(--text);font-family:"Fredoka","Trebuchet MS",system-ui,sans-serif;font-size:20px}
+main{max-width:620px;margin:0 auto;padding:22px 18px 48px;text-align:center}
+h1{font-size:2.1rem;margin:8px 0 4px;line-height:1.1}
 p{margin:6px 0}
-.sub{color:var(--muted);font-size:1rem}
-button{font:inherit;cursor:pointer;border:none;border-radius:14px}
-button:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.sub{color:var(--muted);font-size:1.1rem}
+button{font:inherit;cursor:pointer;border:none;border-radius:22px;color:var(--text)}
+button:focus-visible{outline:4px solid var(--accent);outline-offset:3px}
 .hidden{display:none!important}
-
-.boxes{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;align-items:end;margin-top:18px;height:150px}
-.box{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
-.stack{width:100%;border-radius:8px 8px 4px 4px;min-height:4px;transition:height .4s ease;
-  background:repeating-linear-gradient(to bottom, var(--c) 0 7px, color-mix(in srgb, var(--c) 65%, #fff) 7px 9px)}
-.box .n{font-family:"Fredoka",sans-serif;font-weight:600;font-size:1.05rem;margin-bottom:4px}
-.box .lbl{font-size:.78rem;color:var(--muted);margin-top:6px;text-align:center;line-height:1.1}
-
-.seg{display:flex;flex-wrap:wrap;gap:8px}
-.seg button{background:var(--card);color:var(--text);border:2px solid var(--edge);padding:9px 14px;font-size:1rem}
-.seg button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
-.start{display:grid;gap:10px;margin-top:8px}
-.start button{background:var(--marker);color:#1B2540;font-family:"Fredoka",sans-serif;font-weight:600;font-size:1.25rem;padding:16px;text-align:left;box-shadow:0 3px 0 color-mix(in srgb,var(--marker) 60%, #000)}
-.start button small{display:block;font-family:"Atkinson Hyperlegible",sans-serif;font-weight:400;font-size:.9rem;opacity:.85}
-.linkish{background:none;color:var(--ink);text-decoration:underline;padding:6px 0;font-size:1rem}
-
-.topbar{display:flex;align-items:center;gap:12px}
-.topbar .linkish{text-decoration:none;font-size:1.6rem;line-height:1;padding:4px 8px}
-.bar{flex:1;height:12px;background:var(--line);border-radius:99px;overflow:hidden}
-.bar i{display:block;height:100%;background:var(--ink);width:0;transition:width .3s}
-.count{font-family:"Fredoka",sans-serif;color:var(--muted)}
-.card{background:var(--card);border:2px solid var(--edge);border-radius:18px;padding:22px 20px;margin-top:20px;position:relative}
-.dir{font-size:.95rem;color:var(--muted);padding-right:24px}
-.prompt{font-family:"Fredoka",sans-serif;font-size:2.1rem;font-weight:600;margin:10px 0 4px;line-height:1.15;word-break:break-word}
-.prompt mark{background:var(--marker);color:#1B2540;border-radius:4px;padding:0 .3em}
-.hint{color:var(--muted);font-size:1rem}
-.pip{position:absolute;top:18px;right:18px;width:14px;height:14px;border-radius:50%}
-input.answer{width:100%;font:inherit;font-size:1.4rem;padding:14px;border:2px solid var(--edge);border-radius:12px;background:var(--paper);color:var(--text);margin-top:16px}
-body.pen input.answer{min-height:120px;font-size:2.2rem;padding:18px;border-style:dashed;border-width:3px}
-body.pen input.answer::placeholder{font-size:1.1rem}
-.actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
-.btn{background:var(--ink);color:var(--paper);padding:14px 20px;font-family:"Fredoka",sans-serif;font-weight:600;font-size:1.15rem;flex:1}
-.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink)}
-.btn.ok{background:var(--ok);color:#fff}
-.btn.bad{background:var(--bad);color:#fff}
-.feedback{margin-top:14px;border-radius:12px;padding:12px 14px}
-.feedback.ok{background:var(--okbg);color:var(--ok)}
-.feedback.bad{background:var(--badbg);color:var(--bad)}
-.feedback.almost{background:var(--almostbg);color:var(--almost)}
-.feedback b{font-family:"Fredoka",sans-serif;font-size:1.15rem}
-.feedback .sol{color:var(--text);font-size:1.25rem;margin-top:4px}
-.choices{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;margin-top:16px}
-.choices button{background:var(--paper);border:2px solid var(--edge);color:var(--text);padding:14px 8px;font-size:1.15rem;font-family:"Fredoka",sans-serif}
-.choices button.right{background:var(--okbg);border-color:var(--ok);color:var(--ok)}
-.choices button.wrong{background:var(--badbg);border-color:var(--bad);color:var(--bad)}
-
-.score{font-family:"Fredoka",sans-serif;font-size:3.4rem;color:var(--ink);line-height:1}
-ul.hard{list-style:none;padding:0;margin:8px 0}
-ul.hard li{background:var(--card);border:2px solid var(--edge);border-radius:12px;padding:8px 12px;margin-bottom:6px;display:flex;justify-content:space-between;gap:10px}
-.wrap{overflow-x:auto}
-table{border-collapse:collapse;width:100%;font-size:.98rem;background:var(--card)}
-td,th{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
-th{font-family:"Fredoka",sans-serif;color:var(--ink);font-weight:600}
-.dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:4px;vertical-align:middle}
-@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+.parade{font-size:2.6rem;letter-spacing:.15em;margin:18px 0 6px;line-height:1.3}
+.go{background:var(--accent);color:#fff;font-size:1.7rem;font-weight:700;padding:20px 40px;margin-top:22px;box-shadow:0 5px 0 color-mix(in srgb,var(--accent) 60%,#000)}
+.go:active{transform:translateY(3px);box-shadow:0 2px 0 color-mix(in srgb,var(--accent) 60%,#000)}
+.stars{font-size:1.6rem;min-height:2.2rem;margin-top:6px;letter-spacing:.05em}
+.prog{display:flex;gap:6px;justify-content:center;margin-bottom:10px}
+.prog i{width:22px;height:22px;border-radius:50%;background:var(--edge)}
+.prog i.done{background:var(--star)}
+.prog i.now{outline:3px solid var(--accent)}
+.q{background:var(--card);border:3px solid var(--edge);border-radius:28px;padding:20px 16px 24px;margin-top:6px}
+.ask{color:var(--muted);font-size:1.15rem}
+.big{font-size:5rem;line-height:1.1;margin:8px 0 0}
+.word{font-size:2.6rem;font-weight:700;margin:6px 0}
+.de{font-size:1.3rem;color:var(--muted)}
+.speak{background:var(--sky);font-size:1.6rem;padding:8px 20px;margin-top:8px}
+.opts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.opts button{background:var(--bg);border:3px solid var(--edge);padding:16px 6px;min-height:110px;display:flex;align-items:center;justify-content:center}
+.opts.pics button{font-size:3.6rem}
+.opts.words button{font-size:1.5rem;font-weight:600}
+.opts button.right{background:var(--okbg);border-color:var(--ok)}
+.opts button.wrong{background:var(--badbg);border-color:var(--bad);opacity:.7}
+.fb{font-size:1.6rem;font-weight:700;margin-top:16px;min-height:2.2rem}
+.fb.ok{color:var(--ok)} .fb.bad{color:var(--bad)}
+.next{background:var(--ok);color:#fff;font-size:1.5rem;font-weight:700;padding:16px 36px;margin-top:10px}
+.pop{animation:pop .35s ease}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
+.cats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}
+.cat{background:var(--card);border:3px solid var(--edge);padding:12px 8px 10px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.cat .e{font-size:2.6rem;line-height:1.1}
+.cat .n{font-size:1.25rem;font-weight:600}
+.cat .p{font-size:.95rem;color:var(--muted)}
+.cat .bar{width:80%;height:8px;border-radius:4px;background:var(--edge);overflow:hidden;margin-top:4px}
+.cat .bar b{display:block;height:100%;background:var(--star)}
+.mix{width:100%;margin-top:18px;font-size:1.45rem;padding:16px 20px}
+.chip{display:inline-block;background:var(--card);border:2px solid var(--edge);border-radius:16px;padding:2px 12px;font-size:1rem;color:var(--muted);margin-bottom:8px}
+.reset{background:none;color:var(--muted);text-decoration:underline;font-size:1rem;margin-top:30px}
+@media (prefers-reduced-motion: reduce){.pop{animation:none}}
+@media (max-width:380px){.opts.pics button{font-size:3rem}.word{font-size:2.2rem}}
 </style>
 </head>
 <body>
 <main>
+  <section id="home">
+    <h1>Hello! 👋</h1>
+    <p class="sub">Lerne deine ersten englischen Wörter</p>
+    <div class="stars" id="total"></div>
+    <p class="sub" style="margin-top:10px">Wähle ein Thema:</p>
+    <div class="cats" id="cats"></div>
+    <button class="go mix" id="start">🎲 Alles gemischt</button>
+    <p class="sub" style="margin-top:16px">Tipp: Mach den Ton an 🔊</p>
+    <button class="reset" id="reset">Alles neu anfangen</button>
+  </section>
 
-<section id="home">
-  <h1>Englisch Unit 1</h1>
-  <p class="sub">Wörter, die du gut kannst, kommen seltener. Schwierige Wörter kommen öfter.</p>
-  <div class="boxes" id="boxes" aria-label="Lernstand"></div>
-
-  <h2>Welche Richtung?</h2>
-  <div class="seg" id="dirSeg">
-    <button data-v="de">Deutsch → Englisch</button>
-    <button data-v="mix">Gemischt</button>
-    <button data-v="en">Englisch → Deutsch</button>
-  </div>
-
-  <h2>Schreiben mit</h2>
-  <div class="seg" id="penSeg">
-    <button data-v="0">Tastatur</button>
-    <button data-v="1">Stift (Apple Pencil)</button>
-  </div>
-
-  <h2>Welche Wörter?</h2>
-  <div class="seg" id="topicSeg"></div>
-
-  <h2>Los geht’s</h2>
-  <div class="start">
-    <button id="goType">Eintippen<small>15 Wörter, du schreibst die Antwort</small></button>
-    <button id="goCard">Karteikarten<small>Aufdecken und ehrlich sagen, ob du es wusstest</small></button>
-    <button id="goGap">Lückensätze: my, your, his …<small>So wie Aufgabe 15 im Buch</small></button>
-  </div>
-  <p style="margin-top:22px"><button class="linkish" id="showList">Alle Wörter und Lernstand ansehen</button></p>
-</section>
-
-<section id="quiz" class="hidden">
-  <div class="topbar">
-    <button class="linkish" id="quit" aria-label="Runde beenden">×</button>
-    <div class="bar"><i id="barFill"></i></div>
-    <span class="count" id="count"></span>
-  </div>
-  <div class="card">
-    <span class="pip" id="pip"></span>
-    <div class="dir" id="dirLbl"></div>
-    <div class="prompt" id="prompt"></div>
-    <div class="hint" id="hint"></div>
-
-    <div id="typeArea">
-      <input class="answer" id="answer" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" placeholder="Deine Antwort">
-      <div class="actions" id="typeBtns"><button class="btn" id="check">Prüfen</button><button class="btn ghost" id="dunno">Weiß nicht</button></div>
+  <section id="play" class="hidden">
+    <div class="chip" id="chip"></div>
+    <div class="prog" id="prog"></div>
+    <div class="q">
+      <div class="ask" id="ask"></div>
+      <div id="prompt"></div>
+      <div class="opts" id="opts"></div>
+      <div class="fb" id="fb"></div>
+      <button class="next hidden" id="next">Weiter</button>
     </div>
-    <div id="cardArea" class="hidden">
-      <div class="actions" id="revealRow"><button class="btn" id="reveal">Aufdecken</button></div>
-      <div class="actions hidden" id="judgeRow"><button class="btn ok" id="knew">Gewusst</button><button class="btn bad" id="didnt">Nicht gewusst</button></div>
-    </div>
-    <div id="gapArea" class="hidden"><div class="choices" id="choices"></div></div>
+  </section>
 
-    <div id="fb" class="feedback hidden"></div>
-    <div class="actions hidden" id="nextRow">
-      <button class="btn" id="next">Weiter</button>
-      <button class="btn ghost hidden" id="override">Ich hatte es richtig</button>
-    </div>
-  </div>
-</section>
-
-<section id="summary" class="hidden">
-  <h1>Geschafft!</h1>
-  <p class="score" id="score" style="margin-top:14px"></p>
-  <p class="sub" id="scoreTxt"></p>
-  <div id="hardWrap"><h2>Diese Wörter üben wir nochmal</h2><ul class="hard" id="hardList"></ul></div>
-  <div class="actions"><button class="btn" id="again">Noch eine Runde</button><button class="btn ghost" id="toHome">Zur Übersicht</button></div>
-</section>
-
-<section id="list" class="hidden">
-  <div class="topbar"><button class="linkish" id="listBack" aria-label="Zurück">←</button><h1 style="font-size:1.5rem">Alle Wörter</h1></div>
-  <p class="sub">Linker Punkt: Deutsch → Englisch. Rechter Punkt: Englisch → Deutsch. Rot heißt schwierig, grün heißt sitzt.</p>
-  <div class="wrap"><table><thead><tr><th>Englisch</th><th>Deutsch</th><th>Stand</th></tr></thead><tbody id="tbody"></tbody></table></div>
-  <p style="margin-top:20px"><button class="linkish" id="reset">Lernstand zurücksetzen</button></p>
-</section>
-
+  <section id="done" class="hidden">
+    <h1>Super gemacht! 🎉</h1>
+    <div class="parade" id="won"></div>
+    <p class="sub" id="doneTxt"></p>
+    <button class="go" id="again">Nochmal!</button><br>
+    <button class="reset" id="home2">Zum Anfang</button>
+  </section>
 </main>
 <script>
-// Vokabeln Unit 1, Buchseiten 204 bis 206
-// [englisch, deutsch, thema, {aEn, aDe: weitere erlaubte Antworten, hDe: Hinweis bei DE→EN, hEn: Hinweis bei EN→DE, n: Zahl}]
-const RAW = [
- ["Thanks.","Danke.","st",{aEn:["thank you","thanks"]}],
- ["very","sehr","st"],
- ["some","einige; ein paar; etwas","st"],
- ["of","von","st",{hDe:"a photo ___ Pia (nicht „from“)"}],
- ["to say hello (to)","grüßen; Grüße ausrichten (an)","st",{aEn:["say hello","say hello to"]}],
- ["to","zu; nach; auf; in","st",{hDe:"Let’s go ___ London."}],
- ["problem","Problem; Schwierigkeit","st"],
- ["there is/are","da ist/sind; es gibt","st",{aEn:["there is","there are","there is are","theres"],aDe:["da ist","da sind"]}],
- ["there","da; dort; dahin; dorthin","st",{hDe:"Gegenteil von „here“"}],
- ["garden","Garten","st"],
- ["Mr","Herr (Anrede)","st"],
- ["Mrs","Frau (Anrede)","st"],
- ["now","jetzt; nun","st"],
- ["car","Auto","st"],
- ["everywhere","überall; überallhin","st"],
- ["again","wieder; noch einmal; noch mal","st",{aDe:["nochmal"]}],
- ["floor","Fußboden","st",{aDe:["Boden"]}],
- ["to listen (to)","zuhören; anhören","st",{aEn:["listen","listen to"]}],
- ["idea","Idee; Einfall","st"],
- ["loft","Dachboden","st"],
- ["own","eigene/-r/-s","st",{aDe:["eigene","eigener","eigenes","eigen"]}],
- ["in the middle (of)","in der Mitte (von); mitten in","st",{aEn:["in the middle","in the middle of"]}],
- ["on the right","auf der rechten Seite; rechts","st"],
- ["on the left","auf der linken Seite; links","st"],
- ["from … to","von … bis","st"],
- ["answer","Antwort","st"],
- ["wall","Wand; Mauer","st"],
- ["fridge","Kühlschrank","st"],
- ["address","Adresse","st",{hEn:"",hDe:"Achtung Schreibung!"}],
- ["to remember","sich erinnern (an); sich merken; denken an","st",{aEn:["remember"],aDe:["erinnern","merken"]}],
- ["or","oder","st"],
- ["more","mehr; weitere","st"],
-
- ["on","auf","prep",{hDe:"Sherlock is ___ the bed."}],
- ["under","unter","prep"],
- ["at home","zu Hause","prep",{aDe:["zuhause","daheim"]}],
- ["in","in","prep",{hDe:"Sherlock is ___ the bath."}],
- ["behind","hinter","prep"],
- ["next to","neben","prep"],
- ["in front of","vor","prep"],
-
- ["wardrobe","Kleiderschrank","room",{aDe:["Schrank"]}],
- ["bed","Bett","room"],
- ["table","Tisch","room"],
- ["chair","Stuhl","room"],
- ["lamp","Lampe","room"],
- ["mirror","Spiegel","room"],
- ["shelf","Regal","room",{hDe:"ein Regal (Mehrzahl: shelves)"}],
- ["rug","Teppich, Vorleger","room"],
- ["guitar","Gitarre","room"],
- ["skateboard","Skateboard","room"],
- ["poster","Poster","room"],
- ["toy","Spielzeug","room"],
- ["cuddly toy","Stofftier","room"],
- ["computer","Computer","room"],
-
- ["thirteen","dreizehn","num",{n:13}],["fourteen","vierzehn","num",{n:14}],["fifteen","fünfzehn","num",{n:15}],
- ["sixteen","sechzehn","num",{n:16}],["seventeen","siebzehn","num",{n:17}],["eighteen","achtzehn","num",{n:18}],
- ["nineteen","neunzehn","num",{n:19}],["twenty","zwanzig","num",{n:20}],["twenty-one","einundzwanzig","num",{n:21}],
- ["thirty","dreißig","num",{n:30}],["forty","vierzig","num",{n:40}],["fifty","fünfzig","num",{n:50}],
- ["sixty","sechzig","num",{n:60}],["seventy","siebzig","num",{n:70}],["eighty","achtzig","num",{n:80}],
- ["ninety","neunzig","num",{n:90}],["a/one hundred","hundert/einhundert","num",{n:100,aEn:["a hundred","one hundred","hundred"]}],
-
- ["I","ich","pron"],
- ["you","du","pron",{hEn:"zu einer Person"}],
- ["he","er","pron"],
- ["she","sie","pron",{hDe:"ein Mädchen / eine Frau"}],
- ["it","es","pron"],
- ["we","wir","pron"],
- ["you","ihr/Sie","pron",{hEn:"zu mehreren oder höflich",hDe:"zu mehreren oder höflich"}],
- ["they","sie","pron",{hDe:"mehrere Personen"}],
- ["my","mein/-e","pron"],
- ["your","dein/-e","pron",{hEn:"zu einer Person"}],
- ["his","sein/-e","pron",{hDe:"von einem Jungen / Mann"}],
- ["her","ihr/-e","pron",{hDe:"von einem Mädchen / einer Frau"}],
- ["its","sein/-e; ihr/-e","pron",{hDe:"von einem Ding oder Tier (Achtung: nicht it’s)"}],
- ["our","unser/-e","pron"],
- ["your","euer/eure","pron",{hEn:"zu mehreren Personen",hDe:"zu mehreren Personen"}],
- ["their","ihr/-e","pron",{hDe:"von mehreren"}],
-
- // Pick-up A, S. 198 bis 201
- ["I’m from Greenwich.","Ich bin aus Greenwich.","pua"],
- ["Look!","Schau/Schaut mal!","pua",{aDe:["schau mal","schaut mal"]}],
- ["two boys and a dog","zwei Jungen und ein Hund","pua"],
- ["in Greenwich Park","im Greenwich-Park","pua"],
- ["Dogs are my friends, but not cats.","Hunde sind meine Freunde, aber Katzen nicht.","pua"],
- ["I’m a mouse.","Ich bin eine Maus.","pua"],
- ["Here’s your ball.","Hier ist dein Ball.","pua"],
- ["Hello.","Hallo.","pua",{aEn:["hello","hi"]}],
- ["I’m Pia.","Ich heiße Pia.; Ich bin Pia.","pua",{aEn:["my name is pia"]}],
- ["You’re a nice dog.","Du bist ein lieber Hund.","pua"],
- ["What’s your name?","Wie heißt du?; Wie heißen Sie?","pua"],
- ["Sorry!","Entschuldigung!; Tut mir leid!","pua"],
- ["My dog is crazy.","Mein Hund ist verrückt.","pua"],
- ["My name is Luke.","Ich heiße Luke.","pua",{aEn:["I'm Luke"]}],
- ["We’re from Greenwich.","Wir sind aus Greenwich.","pua"],
- ["Where are you from?","Woher kommst du?; Woher kommt ihr?; Woher kommen Sie?","pua"],
- ["Are you on holiday?","Sind Sie im Urlaub?; Seid ihr im Urlaub?; Bist du im Urlaub?","pua"],
- ["yes","ja","pua"],
- ["no","nein","pua"],
- ["I’m here with my parents.","Ich bin mit meinen Eltern hier.","pua"],
- ["How old are you?","Wie alt bist du?; Wie alt sind Sie?","pua"],
- ["You too?","Du auch?","pua"],
- ["German","deutsch; Deutsch; aus Deutschland; Deutsche/-r","pua",{aDe:["Deutsche","Deutscher"]}],
- ["different","anders; unterschiedlich; verschieden","pua"],
- ["I’m English.","Ich bin Engländer/-in.","pua",{aDe:["Ich bin Engländer","Ich bin Engländerin"]}],
- ["I love dogs.","Ich liebe Hunde.; Ich mag Hunde total gern.","pua"],
- ["Dogs love squirrels.","Hunde lieben Eichhörnchen.","pua"],
- ["That was close!","Das war knapp!","pua"],
- ["This is Pia.","Das (hier) ist Pia.","pua"],
- ["a girl from Germany","ein Mädchen aus Deutschland","pua"],
- ["school","Schule","pua"],
- ["Greenwich Park is big.","Der Greenwich-Park ist groß.","pua"],
- ["It’s great for cycling.","Er ist super zum Radfahren.","pua"],
- ["I don’t like cycling.","Ich fahre nicht gern Rad.","pua"],
- ["My favourite sport is football.","Mein Lieblingssport ist Fußball.","pua"],
- ["I like the boating lake.","Ich mag den See mit den Booten.; Mir gefällt der See mit den Booten.","pua"],
- ["What’s that?","Was ist das?","pua"],
- ["Let’s go!","Lass/Lasst uns hingehen!; Los, gehen wir hin!","pua",{aDe:["lass uns hingehen","lasst uns hingehen","los gehen wir hin"]}],
- ["It’s fun.","Es macht Spaß.","pua"],
- ["puzzle","Rätsel","pua"],
- ["I’m not scared of dogs.","Ich habe keine Angst vor Hunden.","pua"],
- ["I’m scared of cats.","Ich habe Angst vor Katzen.","pua"],
- ["Worms are OK.","Würmer sind o.k.","pua",{aEn:["worms are okay"],aDe:["Würmer sind ok","Würmer sind okay"]}],
- ["Rabbits are nice.","Kaninchen sind nett.","pua"],
- ["They’re my friends.","Sie sind meine Freunde.","pua"],
- ["They don’t eat mice.","Sie essen keine Mäuse.","pua"],
- ["word","Wort","pua"],
- ["Inline skating is great.","Inlineskatesfahren ist toll.","pua",{aDe:["Inlineskaten ist toll"]}],
- ["Volleyball is a great sport.","Volleyball ist ein toller Sport.","pua"],
- ["the same","der-/die-/dasselbe; der/die/das gleiche","pua",{aDe:["dasselbe","derselbe","dieselbe","das gleiche","gleich"]}],
- ["correct","richtig; korrekt","pua",{aEn:["right"],hDe:"Is that ___?"}],
- ["What’s your favourite colour?","Was ist deine Lieblingsfarbe?","pua"],
- ["picture","Bild; Foto","pua"],
- ["people","Leute; Menschen","pua"],
- ["thing","Ding; Sache","pua"],
- ["number","Zahl; Nummer","pua"],
- ["Boat number eight is pink.","Boot Nummer acht ist rosa.","pua"],
- ["I can see Sherlock.","Ich kann Sherlock sehen.; Ich sehe Sherlock.","pua"],
- ["Roll two dice.","Würfle/Würfelt mit zwei Würfeln.","pua",{aDe:["Würfle mit zwei Würfeln","Würfelt mit zwei Würfeln"]}],
- ["Four and six is ten.","Vier plus sechs ist zehn.","pua"],
- ["please","bitte","pua"],
- ["Can you name four sports?","Kannst du vier Sportarten nennen?","pua"],
- ["Say your phone number.","Sage deine Telefonnummer.","pua",{aDe:["Sag deine Telefonnummer"]}],
- ["What colour is Sherlock?","Welche Farbe hat Sherlock?","pua"],
- ["alphabet","Alphabet","pua"],
- ["Rap like me.","Rappe/Rappt wie ich.","pua",{aDe:["Rappe wie ich","Rappt wie ich","Rapp wie ich"]}],
- ["I love you.","Ich liebe dich.; Ich mag dich.","pua"],
-
- ["one","eins","num",{n:1}],["two","zwei","num",{n:2}],["three","drei","num",{n:3}],["four","vier","num",{n:4}],
- ["five","fünf","num",{n:5}],["six","sechs","num",{n:6}],["seven","sieben","num",{n:7}],["eight","acht","num",{n:8}],
- ["nine","neun","num",{n:9}],["ten","zehn","num",{n:10}],["eleven","elf","num",{n:11}],["twelve","zwölf","num",{n:12}],
-
- ["animal","Tier","ani"],
- ["hamster","Hamster","ani"],["horse","Pferd","ani"],["cat","Katze","ani"],["worm","Wurm","ani"],
- ["parrot","Papagei","ani"],["squirrel","Eichhörnchen","ani"],["fish","Fisch","ani"],["rat","Ratte","ani"],
- ["budgie","Wellensittich","ani"],["dog","Hund","ani"],["rabbit","Kaninchen","ani",{aDe:["Hase"]}],["bear","Bär","ani"],
- ["mouse","Maus","ani",{hDe:"eine Maus"}],["mice","Mäuse","ani",{hDe:"mehrere Mäuse"}],
-
- ["colour","Farbe","col"],
- ["black","schwarz","col"],["blue","blau","col"],["brown","braun","col"],["green","grün","col"],
- ["grey","grau","col"],["orange","orange","col"],["pink","pink; rosa","col"],["purple","lila; violett","col"],
- ["red","rot","col"],["white","weiß","col"],["yellow","gelb","col"],
-
- // S. 203 und 207
- ["living room","Wohnzimmer","home"],["bedroom","Schlafzimmer","home"],["kitchen","Küche","home"],
- ["bathroom","Bad; Badezimmer","home",{hDe:"der Raum, nicht die Wanne"}],
- ["roof","Dach","home"],["door","Tür","home"],["window","Fenster","home"],["hall","Flur","home"],
- ["cellar","Keller","home"],["terrace","Terrasse","home"],["balcony","Balkon","home"],["garage","Garage","home"],["shed","Schuppen","home"],
-
- ["sister","Schwester","fam"],["brother","Bruder","fam"],["father","Vater","fam"],["mother","Mutter","fam"],
- ["cousin","Cousin/Cousine","fam"],["only child","Einzelkind","fam"],["dad","Papa","fam"],["mum","Mama","fam"],
- ["uncle","Onkel","fam"],["aunt","Tante","fam"],
- ["little","klein","fam",{aEn:["small"],hDe:"___ brother"}],
- ["an","ein/-e","fam",{aDe:["ein","eine"],hDe:"vor a, e, i, o, u: ___ animal"}],
- ["she’s","sie ist","fam",{aEn:["she is"]}],["he’s","er ist","fam",{aEn:["he is"]}],
- ["isn’t","ist nicht","fam",{aEn:["is not"]}],
- ["always","immer; ständig","fam"],["easy","einfach; leicht","fam"],
-
- ["good","gut","more"],["biscuit","Keks","more"],["to help","helfen","more"],["to collect","sammeln","more"],
- ["new","neu","more"],["small","klein","more",{aEn:["little"],hDe:"Gegenteil von big"}],
- ["fantasy","Fantasie; Traum-","more"],["to draw","zeichnen","more"],["step","Stufe; Schritt","more"],
- ["busy","belebt; beschäftigt","more"],["Who … for?","Für wen …?","more",{aEn:["who for"]}],
- ["who","wer; wem; wen","more"],
- ["to explore","auf Entdeckungsreise gehen; sich umschauen; erkunden; erforschen","more",{aDe:["umschauen"]}],
- ["best","beste/-r/-s","more",{aDe:["beste","bester","bestes"]}],["bag","Tasche; Tüte","more"],
- ["maybe","vielleicht","more"],["after","nach (zeitlich)","more",{hDe:"___ school (zeitlich)"}],
- ["visit","Besuch","more"],["outside","nach draußen; draußen; außerhalb (von)","more"],
- ["awful","schrecklich; furchtbar","more"],["Don’t worry!","Keine Sorge!","more"],
- ["sentence","Satz","more"],["right","richtig; korrekt","more",{aEn:["correct"],hDe:"Yes, that’s ___."}],
- ["ending","Ende; Schluss (einer Geschichte)","more"],["to talk about","sprechen über; erzählen von","more"]
+const CATS=[
+ {k:"tiere",n:"Tiere",e:"🐾",w:[["cat","Katze","🐱"],["dog","Hund","🐶"],["horse","Pferd","🐴"],["rabbit","Hase","🐰"],["fish","Fisch","🐟"],["bird","Vogel","🐦"],["unicorn","Einhorn","🦄"],["mouse","Maus","🐭"],["cow","Kuh","🐮"],["pig","Schwein","🐷"],["duck","Ente","🦆"],["lion","Löwe","🦁"],["elephant","Elefant","🐘"],["frog","Frosch","🐸"]]},
+ {k:"farben",n:"Farben",e:"🎨",w:[["red","rot","🟥"],["blue","blau","🟦"],["green","grün","🟩"],["yellow","gelb","🟨"],["orange","orange","🟧"],["purple","lila","🟪"],["brown","braun","🟫"],["black","schwarz","⬛"],["white","weiß","⬜"],["pink","rosa","🩷"]]},
+ {k:"essen",n:"Essen",e:"🍎",w:[["apple","Apfel","🍎"],["banana","Banane","🍌"],["strawberry","Erdbeere","🍓"],["carrot","Karotte","🥕"],["bread","Brot","🍞"],["egg","Ei","🥚"],["milk","Milch","🥛"],["cake","Kuchen","🎂"],["pizza","Pizza","🍕"],["ice cream","Eis","🍦"]]},
+ {k:"zahlen",n:"Zahlen",e:"🔢",w:[["one","eins","1️⃣"],["two","zwei","2️⃣"],["three","drei","3️⃣"],["four","vier","4️⃣"],["five","fünf","5️⃣"],["six","sechs","6️⃣"],["seven","sieben","7️⃣"],["eight","acht","8️⃣"],["nine","neun","9️⃣"],["ten","zehn","🔟"]]},
+ {k:"sachen",n:"Spielen & Schule",e:"🧸",w:[["ball","Ball","⚽"],["teddy","Teddy","🧸"],["kite","Drachen","🪁"],["car","Auto","🚗"],["bike","Fahrrad","🚲"],["book","Buch","📖"],["pencil","Bleistift","✏️"],["schoolbag","Schulranzen","🎒"],["house","Haus","🏠"]]},
+ {k:"natur",n:"Natur & Wetter",e:"🌈",w:[["sun","Sonne","☀️"],["moon","Mond","🌙"],["star","Stern","⭐"],["tree","Baum","🌳"],["flower","Blume","🌸"],["rain","Regen","🌧️"],["snow","Schnee","❄️"],["rainbow","Regenbogen","🌈"]]},
+ {k:"familie",n:"Familie",e:"👨‍👩‍👧",w:[["mum","Mama","👩"],["dad","Papa","👨"],["sister","Schwester","👧"],["brother","Bruder","👦"],["grandma","Oma","👵"],["grandpa","Opa","👴"],["baby","Baby","👶"]]},
+ {k:"koerper",n:"Mein Körper",e:"👂",w:[["hand","Hand","✋"],["foot","Fuß","🦶"],["nose","Nase","👃"],["eye","Auge","👁️"],["ear","Ohr","👂"],["mouth","Mund","👄"]]},
+ {k:"sagen",n:"Sagen & Fühlen",e:"😀",w:[["hello","hallo","👋"],["yes","ja","👍"],["no","nein","👎"],["happy","fröhlich","😀"],["sad","traurig","😢"],["tired","müde","😴"]]}
 ];
-const TOPICS=[["all","Alle"],["pua","Pick-up A"],["ani","Tiere"],["col","Farben"],["num","Zahlen"],["home","Haus & Räume"],["fam","Familie"],["more","Story & mehr"],["st","Station 2 Wörter"],["room","Mein Zimmer"],["prep","Präpositionen"],["pron","Pronomen"]];
-const VOCAB=RAW.map((r,i)=>({id:"v"+i,en:r[0],de:r[1],topic:r[2],...(r[3]||{})}));
+const WORDS=[];
+CATS.forEach(c=>c.w.forEach(([en,de,pic])=>WORDS.push({id:en,en,de,pic,c:c.k})));
+const OLD=["cat","dog","horse","rabbit","fish","bird","unicorn","red","blue","green","yellow","apple","ice cream","ball","sun","house","one","two","three","hello"];
 
-// Lückensätze wie Aufgabe 15 (eigene Übungssätze)
-const GAPS=[
- ["Tom and Lisa are twins. ___ house is in Park Road.","Their"],
- ["This is Emma. ___ bike is red.","Her"],
- ["That’s Ben. ___ dog is called Rex.","His"],
- ["Look at the cat! ___ eyes are green.","Its"],
- ["We’re sisters. ___ room is very small.","Our"],
- ["I’m Max. ___ favourite colour is blue.","My"],
- ["Hi Anna! Is this ___ guitar?","your"],
- ["The school is new. ___ name is Hill School.","Its"],
- ["My parents love the garden. ___ garden is big.","Their"],
- ["Mr Brown is a teacher. ___ car is old.","His"],
- ["Mrs Green has got a dog. ___ dog is under the table.","Her"],
- ["Are you new here? What’s ___ address?","your"],
- ["We live in London. ___ flat is next to a park.","Our"],
- ["I’ve got a rabbit. ___ name is Hoppel.","Its"],
- ["Sam and Tim, where are ___ bags?","your"],
- ["I love ___ room. It’s in the loft.","my"],
- ["Lily is my friend. ___ bed is next to the window.","Her"],
- ["The boys are in the garden. ___ ball is behind the tree.","Their"]
-];
-const GAP_OPTS=["my","your","his","her","its","our","their"];
-
-const KEY="vokabeltrainer-unit1-v1";
-let S={boxes:{},settings:{dir:"mix",topic:"all",pen:false}};
-try{const raw=localStorage.getItem(KEY); if(raw){const p=JSON.parse(raw); if(p&&p.boxes) S={boxes:p.boxes,settings:{...S.settings,...(p.settings||{})}};}}catch(e){}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
-function rec(id,dir){const k=id+"|"+dir; if(!S.boxes[k]) S.boxes[k]={b:0,w:0,r:0}; return S.boxes[k];}
-
-function canon(s){
-  s=s.toLowerCase().replace(/[’`´']/g,"").replace(/\(([^)]*)\)/g," $1 ")
-   .replace(/…|\.\.\./g," ").replace(/[.,!?;:"„“]/g," ").replace(/-/g," ")
-   .replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss")
-   .replace(/\s+/g," ").trim();
-  return s.replace(/^(to|the|a|an|der|die|das|ein|eine|einen) (?=\S)/,"");
-}
-function variants(text){
-  const out=new Set();
-  text.split(";").flatMap(p=>p.includes(",")&&p.trim().split(/\s+/).length<=3?p.split(","):[p]).map(v=>v.trim()).filter(Boolean).forEach(v=>{
-    out.add(v); out.add(v.replace(/\([^)]*\)/g,""));
-    const m=v.match(/^(\S+)\/-e$/); if(m){out.add(m[1]); out.add(m[1]+"e");}
-    if(/^[^\s\/]+\/[^\s\/-][^\s\/]*$/.test(v)) v.split("/").forEach(x=>out.add(x));
-  });
-  return [...out];
-}
-function accepted(item,dir){
-  const base=dir==="de"?[...variants(item.en),...(item.aEn||[])]:[...variants(item.de),...(item.aDe||[])];
-  if(item.n) base.push(String(item.n));
-  return [...new Set(base.map(canon).filter(Boolean))];
-}
-function lev(a,b){
-  const d=Array.from({length:a.length+1},(_,i)=>[i]);
-  for(let j=1;j<=b.length;j++) d[0][j]=j;
-  for(let i=1;i<=a.length;i++) for(let j=1;j<=b.length;j++)
-    d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
-  return d[a.length][b.length];
-}
-function judge(input,item,dir){
-  const u=canon(input); if(!u) return "bad";
-  const acc=accepted(item,dir);
-  if(acc.includes(u)) return "ok";
-  for(const a of acc){const tol=a.length>=20?Math.floor(a.length/10):a.length>=9?2:(a.length>=4?1:0); if(tol&&lev(u,a)<=tol) return "almost";}
-  return "bad";
-}
-
-// Gewichtung: Kasten 0 = neu, 1 = schwierig ... 5 = sitzt
-const W=[10,16,7,3,1.3,0.5];
-function pool(){return VOCAB.filter(v=>S.settings.topic==="all"||v.topic===S.settings.topic);}
-function pickDir(){const d=S.settings.dir; return d==="mix"?(Math.random()<0.7?"de":"en"):d;}
-let R=null;
-function pickNext(){
-  const due=R.retry.findIndex(x=>x.at<=R.i);
-  if(due>=0) return R.retry.splice(due,1)[0];
-  const dir=pickDir(), p=pool();
-  const cand=p.filter(v=>!R.recent.includes(v.id)); const list=cand.length?cand:p;
-  let tot=0; const ws=list.map(v=>{const w=W[rec(v.id,dir).b]; tot+=w; return w;});
-  let r=Math.random()*tot;
-  for(let k=0;k<list.length;k++){r-=ws[k]; if(r<=0) return {item:list[k],dir};}
-  return {item:list[list.length-1],dir};
-}
-
+const KEY="erste-englische-woerter-v2", OLDKEY="erste-englische-woerter-v1";
+let S={b:{},stars:0};
+try{
+  const r=localStorage.getItem(KEY);
+  if(r){const p=JSON.parse(r); if(p&&p.b) S={b:p.b,stars:p.stars||0};}
+  else{const o=localStorage.getItem(OLDKEY); if(o){const p=JSON.parse(o); if(p&&p.b){Object.keys(p.b).forEach(i=>{if(OLD[i]) S.b[OLD[i]]=p.b[i];}); S.stars=p.stars||0;}}}
+}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}};
+const box=id=>S.b[id]??0;           // 0 = neu, 1 = schwierig, 2..4 = kann ich
+const W=[8,12,4,2,1];
 const $=id=>document.getElementById(id);
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-function show(n){["home","quiz","summary","list"].forEach(s=>$(s).classList.toggle("hidden",s!==n)); window.scrollTo(0,0);}
-const BOXCOL=["--b0","--b1","--b2","--b3","--b4","--b5"];
-const BOXLBL=["neu","übe ich","wird besser","geht gut","kann ich","sitzt"];
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 
+let voice=null;
+function pickVoice(){const v=speechSynthesis.getVoices(); voice=v.find(x=>/en[-_]GB/i.test(x.lang))||v.find(x=>/^en/i.test(x.lang))||null;}
+if("speechSynthesis" in window){pickVoice(); speechSynthesis.onvoiceschanged=pickVoice;}
+function say(t){try{speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.lang="en-GB"; if(voice) u.voice=voice; u.rate=.8; speechSynthesis.speak(u);}catch(e){}}
+
+const ROUND=10; let R;
+function pick(){
+  const list=R.pool.filter(w=>!R.recent.includes(w.id));
+  let tot=0; const ws=list.map(w=>{const x=W[box(w.id)]; tot+=x; return x;});
+  let r=Math.random()*tot;
+  for(let i=0;i<list.length;i++){r-=ws[i]; if(r<=0) return list[i];}
+  return list[list.length-1];
+}
+let CUR=null; // null = alles gemischt
+function start(cat){
+  CUR=cat===undefined?CUR:cat;
+  const c=CATS.find(x=>x.k===CUR);
+  R={i:0,right:0,recent:[],retry:[],won:[],pool:c?WORDS.filter(w=>w.c===c.k):WORDS};
+  $("chip").textContent=c?`${c.e} ${c.n}`:"🎲 Alles gemischt";
+  show("play"); ask();
+}
+function show(n){["home","play","done"].forEach(s=>$(s).classList.toggle("hidden",s!==n));}
 function renderHome(){
-  const p=pool(), dirs=S.settings.dir==="mix"?["de","en"]:[S.settings.dir], c=[0,0,0,0,0,0];
-  p.forEach(v=>{c[Math.round(dirs.reduce((a,d)=>a+rec(v.id,d).b,0)/dirs.length)]++;});
-  const max=Math.max(...c,1);
-  $("boxes").innerHTML=c.map((n,i)=>`<div class="box"><span class="n">${n}</span><div class="stack" style="--c:var(${BOXCOL[i]});height:${Math.max(4,n/max*100)}px"></div><span class="lbl">${BOXLBL[i]}</span></div>`).join("");
-  document.querySelectorAll("#dirSeg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===S.settings.dir));
-  document.querySelectorAll("#penSeg button").forEach(b=>b.setAttribute("aria-pressed",(b.dataset.v==="1")===!!S.settings.pen));
-  document.body.classList.toggle("pen",!!S.settings.pen);
-  $("topicSeg").innerHTML=TOPICS.map(([k,l])=>`<button data-v="${k}" aria-pressed="${k===S.settings.topic}">${l}</button>`).join("");
-}
-$("dirSeg").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; S.settings.dir=b.dataset.v; save(); renderHome();});
-$("penSeg").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; S.settings.pen=b.dataset.v==="1"; save(); renderHome();});
-$("topicSeg").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; S.settings.topic=b.dataset.v; save(); renderHome();});
-
-function startRound(mode){
-  R={mode,i:0,total:15,right:0,recent:[],retry:[],wrongs:new Map(),cur:null,answered:false};
-  if(mode==="gap"){R.queue=[...GAPS].sort(()=>Math.random()-.5).slice(0,12); R.total=R.queue.length;}
-  show("quiz"); nextQ();
-}
-$("goType").onclick=()=>startRound("type");
-$("goCard").onclick=()=>startRound("card");
-$("goGap").onclick=()=>startRound("gap");
-
-function nextQ(){
-  if(R.i>=R.total) return finish();
-  R.answered=false; R.lastBox=null;
-  $("fb").className="feedback hidden"; $("nextRow").classList.add("hidden"); $("override").classList.add("hidden");
-  $("typeArea").classList.toggle("hidden",R.mode!=="type");
-  $("cardArea").classList.toggle("hidden",R.mode!=="card");
-  $("gapArea").classList.toggle("hidden",R.mode!=="gap");
-  $("count").textContent=(R.i+1)+" / "+R.total;
-  $("barFill").style.width=(R.i/R.total*100)+"%";
-
-  if(R.mode==="gap"){
-    const g=R.queue[R.i]; R.cur={gap:g};
-    $("pip").style.background="transparent";
-    $("dirLbl").textContent="Welches Wort fehlt?";
-    $("prompt").innerHTML=esc(g[0]).replace("___","<mark>&nbsp;?&nbsp;</mark>");
-    $("prompt").style.fontSize="1.5rem"; $("hint").textContent="";
-    $("choices").innerHTML=GAP_OPTS.map(o=>`<button data-v="${o}">${o}</button>`).join("");
-    return;
-  }
-  $("prompt").style.fontSize="";
-  const q=pickNext(); R.cur=q;
-  R.recent.push(q.item.id); if(R.recent.length>3) R.recent.shift();
-  const it=q.item, de=q.dir==="de";
-  $("pip").style.background=`var(${BOXCOL[rec(it.id,q.dir).b]})`;
-  $("dirLbl").textContent=de?"Wie heißt das auf Englisch?":"Was heißt das auf Deutsch?";
-  $("prompt").textContent=de?it.de:it.en;
-  $("hint").textContent=(de?it.hDe:it.hEn)||"";
-  if(R.mode==="type"){
-    const a=$("answer"); a.value=""; a.disabled=false; a.lang=de?"en":"de";
-    a.placeholder=S.settings.pen?"Hier mit dem Stift hineinschreiben":"Deine Antwort";
-    $("typeBtns").classList.remove("hidden");
-    if(!S.settings.pen) setTimeout(()=>a.focus(),50); else a.blur();
-  }
-  else {$("revealRow").classList.remove("hidden"); $("judgeRow").classList.add("hidden");}
-}
-
-function solution(){return R.cur.dir==="de"?R.cur.item.en:R.cur.item.de;}
-function apply(result){
-  const {item,dir}=R.cur, r=rec(item.id,dir);
-  R.lastBox={k:item.id+"|"+dir,prev:{...r},retryLen:R.retry.length};
-  if(result==="ok"){r.b=r.b===0?2:Math.min(5,r.b+1); r.r++; R.right++;}
-  else if(result==="almost"){if(r.b===0) r.b=1; r.r++; R.right+=0.5;}
-  else {r.b=1; r.w++; R.wrongs.set(item.id+"|"+dir,{item,dir}); R.retry.push({item,dir,at:R.i+3});}
-  save();
-}
-function showFb(kind,title,withSol){
-  const f=$("fb"); f.className="feedback "+kind;
-  f.innerHTML=`<b>${esc(title)}</b>`+(withSol?`<div class="sol">${esc(solution())}</div>`:"");
-  $("nextRow").classList.remove("hidden"); R.answered=true;
-  setTimeout(()=>$("next").focus(),30);
-}
-function check(){
-  if(R.answered) return;
-  const v=$("answer").value, res=judge(v,R.cur.item,R.cur.dir);
-  $("answer").disabled=true; $("typeBtns").classList.add("hidden");
-  apply(res);
-  if(res==="ok") showFb("ok","Richtig! 🎉",variants(solution()).length>1);
-  else if(res==="almost") showFb("almost","Fast! Achte auf die Schreibung:",true);
-  else {showFb("bad",v.trim()?"Leider nicht. Richtig ist:":"Richtig ist:",true); if(v.trim()) $("override").classList.remove("hidden");}
-}
-$("check").onclick=check;
-$("dunno").onclick=()=>{$("answer").value=""; check();};
-$("answer").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault(); e.stopPropagation(); check();}});
-$("override").onclick=()=>{
-  const {k,prev,retryLen}=R.lastBox; S.boxes[k]=prev; R.wrongs.delete(k); R.retry.length=retryLen;
-  apply("ok"); $("override").classList.add("hidden");
-  $("fb").className="feedback ok"; $("fb").innerHTML="<b>Okay, zählt als richtig.</b>";
-};
-$("reveal").onclick=()=>{
-  $("revealRow").classList.add("hidden"); $("judgeRow").classList.remove("hidden");
-  const f=$("fb"); f.className="feedback almost"; f.innerHTML=`<div class="sol">${esc(solution())}</div>`;
-};
-$("knew").onclick=()=>{apply("ok"); $("judgeRow").classList.add("hidden"); showFb("ok","Super!",true);};
-$("didnt").onclick=()=>{apply("bad"); $("judgeRow").classList.add("hidden"); showFb("bad","Kommt gleich nochmal:",true);};
-
-$("choices").addEventListener("click",e=>{
-  const b=e.target.closest("button"); if(!b||R.answered) return;
-  const g=R.cur.gap, right=g[1].toLowerCase(), ok=b.dataset.v===right;
-  document.querySelectorAll("#choices button").forEach(x=>{if(x.dataset.v===right) x.classList.add("right");});
-  if(!ok){b.classList.add("wrong"); R.wrongs.set("gap"+g[0],{gap:g}); R.queue.push(g); R.total++;}
-  else R.right++;
-  $("prompt").innerHTML=esc(g[0]).replace("___",`<mark>${g[1]}</mark>`);
-  const f=$("fb"); f.className="feedback "+(ok?"ok":"bad"); f.innerHTML=`<b>${ok?"Richtig! 🎉":"Nicht ganz. Richtig ist: "+g[1]}</b>`;
-  $("nextRow").classList.remove("hidden"); R.answered=true; setTimeout(()=>$("next").focus(),30);
-});
-
-$("next").onclick=()=>{R.i++; nextQ();};
-$("quit").onclick=()=>{renderHome(); show("home");};
-
-function finish(){
-  $("barFill").style.width="100%";
-  const pct=Math.round(R.right/R.total*100);
-  $("score").textContent=pct+" %";
-  $("scoreTxt").textContent=pct>=90?"Wow, richtig stark!":pct>=70?"Gut gemacht! Noch ein bisschen üben.":"Dranbleiben, das wird jeden Tag besser!";
-  const hs=[...R.wrongs.values()];
-  $("hardWrap").classList.toggle("hidden",!hs.length);
-  $("hardList").innerHTML=hs.map(h=>h.gap?`<li><span>${esc(h.gap[0])}</span><b>${esc(h.gap[1])}</b></li>`:`<li><span>${esc(h.item.en)}</span><b>${esc(h.item.de)}</b></li>`).join("");
-  show("summary");
-}
-$("again").onclick=()=>startRound(R.mode);
-$("toHome").onclick=()=>{renderHome(); show("home");};
-
-function renderList(){
-  $("tbody").innerHTML=VOCAB.map(v=>{
-    const a=rec(v.id,"de").b, b=rec(v.id,"en").b;
-    return `<tr><td>${esc(v.en)}</td><td>${esc(v.de)}</td><td><span class="dot" style="background:var(${BOXCOL[a]})"></span><span class="dot" style="background:var(${BOXCOL[b]})"></span></td></tr>`;
+  const known=WORDS.filter(w=>box(w.id)>=2).length;
+  $("total").textContent=S.stars?`⭐ ${S.stars} Sterne | ${known} von ${WORDS.length} Wörtern kannst du schon`:"";
+  $("cats").innerHTML=CATS.map(c=>{
+    const ws=WORDS.filter(w=>w.c===c.k), k=ws.filter(w=>box(w.id)>=2).length;
+    return `<button class="cat" data-k="${c.k}"><span class="e" aria-hidden="true">${c.e}</span><span class="n">${c.n}</span><span class="p">${k} von ${ws.length}</span><span class="bar"><b style="width:${Math.round(k/ws.length*100)}%"></b></span></button>`;
   }).join("");
 }
-$("showList").onclick=()=>{renderList(); show("list");};
-$("listBack").onclick=()=>{renderHome(); show("home");};
-$("reset").onclick=()=>{if(confirm("Wirklich den ganzen Lernstand löschen?")){S.boxes={}; save(); renderList();}};
-
+$("cats").addEventListener("click",e=>{const b=e.target.closest(".cat"); if(b) start(b.dataset.k);});
+function ask(){
+  if(R.i>=ROUND) return finish();
+  $("prog").innerHTML=Array.from({length:ROUND},(_,k)=>`<i class="${k<R.i?"done":k===R.i?"now":""}"></i>`).join("");
+  $("fb").textContent=""; $("fb").className="fb"; $("next").classList.add("hidden"); R.answered=false;
+  const due=R.retry.findIndex(x=>x.at<=R.i);
+  const w=due>=0?R.retry.splice(due,1)[0].w:pick();
+  R.recent.push(w.id); if(R.recent.length>3) R.recent.shift();
+  // Ablenker bevorzugt aus demselben Thema
+  const same=shuffle(WORDS.filter(x=>x.c===w.c&&x.id!==w.id));
+  const rest=shuffle(WORDS.filter(x=>x.c!==w.c));
+  const others=[...same,...rest].slice(0,2);
+  const opts=shuffle([w,...others]);
+  // Typ A: englisches Wort hören -> Bild tippen. Typ B: Bild + Deutsch -> englisches Wort tippen.
+  const typeA=box(w.id)<1?Math.random()<.6:Math.random()<.4;
+  R.cur={w,typeA};
+  if(typeA){
+    $("ask").textContent="Welches Bild passt?";
+    $("prompt").innerHTML=`<div class="word">${w.en}</div><button class="speak" id="spk" aria-label="Anhören">🔊</button>`;
+    $("opts").className="opts pics";
+    $("opts").innerHTML=opts.map(o=>`<button data-id="${o.id}" aria-label="${o.de}">${o.pic}</button>`).join("");
+    say(w.en);
+  } else {
+    $("ask").textContent="Wie heißt das auf Englisch?";
+    $("prompt").innerHTML=`<div class="big">${w.pic}</div><div class="de">${w.de}</div>`;
+    $("opts").className="opts words";
+    $("opts").innerHTML=opts.map(o=>`<button data-id="${o.id}">${o.en}</button>`).join("");
+  }
+  const spk=$("spk"); if(spk) spk.onclick=()=>say(w.en);
+}
+$("opts").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b||R.answered) return;
+  const w=R.cur.w, ok=b.dataset.id===w.id;
+  if(ok){
+    R.answered=true; b.classList.add("right","pop");
+    S.b[w.id]=box(w.id)===0?2:Math.min(4,box(w.id)+1);
+    if(!R.firstTryMissed){R.right++; S.stars++; R.won.push(w.pic);}
+    R.firstTryMissed=false;
+    $("fb").textContent=["Super! ⭐","Toll! ⭐","Richtig! ⭐","Klasse! ⭐"][Math.floor(Math.random()*4)]; $("fb").className="fb ok";
+    say(w.en); save();
+    $("next").classList.remove("hidden"); $("next").focus();
+  } else {
+    b.classList.add("wrong"); b.disabled=true;
+    if(!R.firstTryMissed){S.b[w.id]=1; R.retry.push({w,at:R.i+3}); save();}
+    R.firstTryMissed=true;
+    $("fb").textContent="Probier’s nochmal!"; $("fb").className="fb bad";
+  }
+});
+$("next").onclick=()=>{R.i++; ask();};
+function finish(){
+  $("won").textContent=R.won.join("")||"💪";
+  $("doneTxt").textContent=`${R.right} von ${ROUND} gleich beim ersten Mal richtig!`;
+  show("done");
+}
+$("start").onclick=()=>start(null); $("again").onclick=()=>start();
+$("home2").onclick=()=>{renderHome(); show("home");};
+$("reset").onclick=()=>{if(confirm("Wirklich alles neu anfangen?")){S={b:{},stars:0}; save(); renderHome();}};
 renderHome();
 </script>
 </body>
